@@ -22,14 +22,12 @@ def send_email_notification(from_address, to_address, subject, message, smtp_ser
     msg['Subject'] = subject
     msg['From'] = from_address
     msg['To'] = to_address
-    try:
-        s = smtplib.SMTP(smtp_server, smtp_port)
-        if smtp_username and smtp_password:
-            s.login(smtp_username, smtp_password)
-        s.sendmail(from_address, [to_address], msg.as_string())
-        s.quit()
-    except:
-        print("Error: Unable to send notification email.")
+
+    s = smtplib.SMTP(smtp_server, smtp_port)
+    if smtp_username and smtp_password:
+        s.login(smtp_username, smtp_password)
+    s.sendmail(from_address, [to_address], msg.as_string())
+    s.quit()
 
 # Set the directory path
 dir_path = "."  # change this to the desired directory path
@@ -90,3 +88,4 @@ else:
 # Add timestamp to the log file
 with open("log.txt", "a") as f:
     f.write(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Files in {dir_path} hashed.\n")
+
