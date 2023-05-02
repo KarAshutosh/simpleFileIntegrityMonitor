@@ -4,6 +4,12 @@ import time
 import smtplib
 from email.mime.text import MIMEText
 
+# Define the list of files/folders to ignore
+ignore_list = ['.git']
+
+# Set the directory path
+dir_path = "."  # change this to the desired directory path
+
 # Function to generate hash of a file
 def generate_hash(file_path):
     with open(file_path, 'rb') as f:
@@ -31,9 +37,6 @@ def send_email_notification(from_address, to_address, subject, message, smtp_ser
     except:
         print("Error: Unable to send notification email.")
 
-# Set the directory path
-dir_path = "."  # change this to the desired directory path
-
 # Check if the directory exists
 if not os.path.exists(dir_path):
     print(f"Directory '{dir_path}' does not exist.")
@@ -50,9 +53,6 @@ if os.path.exists("lastHash.txt"):
                 exit()
             file_name, file_hash = parts
             last_hash_values[file_name] = file_hash
-
-# Define the list of files/folders to ignore
-ignore_list = ['temp.txt', 'logs', '.git']
 
 # Hash all files in the directory and its subdirectories
 new_hash_values = {}
